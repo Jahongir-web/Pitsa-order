@@ -25,11 +25,24 @@ if (elForm){
   var typesOfSize = [`25sm`, `30sm`, `35sm`];
 
   for (var size of typesOfSize) {
-    var elRadio = document.createElement(`input`);
     var elLabel = document.createElement(`label`);
+    var elRadio = document.createElement(`input`);
 
-    elRadio.type = radio;
-    elRadio.placeholder = size;
+    elLabel.textContent = size;
+    elLabel.htmlFor = size;
+    elRadio.type = "radio";
+    elRadio.name = `radio`;
+    elRadio.id = size;
+    elSizeDiv.appendChild(elLabel);
     elSizeDiv.appendChild(elRadio);
+
+
+
+    elSizeDiv.addEventListener(`change`, function(){
+      var elKattaligi = elForm.querySelector(`.kattalik-turi`);
+      elKattaligi.textContent = (size);
+    });
   }
+
+
 }
