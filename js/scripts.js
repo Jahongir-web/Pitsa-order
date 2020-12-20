@@ -13,10 +13,11 @@ var pizzaAddls = [];
 
 if (elForm) {
   var elSelect = elForm.querySelector(`.js-order-select`);
-  var elNonTuri = elForm.querySelector(`.non-turi`);
   var elKattaligi = elForm.querySelector(`.kattalik-turi`);
-  var elUstida = elForm.querySelector(`.ustida`);
+  var elIngredientsBox = elForm.querySelector(`.massalliqlar`);  // inputlar
+  var elNonTuri = elForm.querySelector(`.non-turi`);
   var elSizeDiv = elForm.querySelector(`.kattaligi`);
+  var elUstida = elForm.querySelector(`.ustida`);
 
 }
 
@@ -58,3 +59,56 @@ for (let size of typesOfSize) {
 }
 
 // pitsa o'lchamini tanlash qismi ishladi.
+
+
+// pitsa qo'shimchalarini tanlash qismi boshlandi.
+
+
+var updateOrderIngredients = function () {
+
+  elUstida.innerHTML = '';
+
+  for (var addedIngredient of addedIngredients) {
+    var elIngredientItem = document.createElement('li'); // li yasaymiz
+    elIngredientItem.textContent = addedIngredient;
+    elUstida.appendChild(elIngredientItem); // li ni ul ga joylab qo'yamiz.
+  }
+};
+
+
+for (let ingredient of ingredients) {
+  var ingredientsLabel = document.createElement(`label`);
+  var ingredientsInput = document.createElement(`input`);
+  var ingredientsSpan = document.createElement(`span`);
+
+  ingredientsLabel.classList.add(`label-ingredient`);
+  ingredientsLabel.textContent = ingredient;
+  ingredientsInput.type = `checkbox`;
+  ingredientsInput.name = ingredient;
+  ingredientsInput.value = ingredient;
+  ingredientsInput.classList.add(`ingredient-checkbox`);
+  ingredientsInput.classList.add(`sr-only`);
+  ingredientsSpan.classList.add(`ingredient-span`);
+
+  ingredientsLabel.appendChild(ingredientsInput);
+  ingredientsLabel.appendChild(ingredientsSpan);
+
+  elIngredientsBox.appendChild(ingredientsLabel);
+
+
+  ingredientsInput.addEventListener (`click`, function () {
+
+
+    if (addedIngredients.includes(this.name)) {
+      var itemIndex = addedIngredients.indexOf(this.name);
+      addedIngredients.splice(itemIndex, 1);
+    } else {
+      addedIngredients.push(this.name);
+    }
+
+    updateOrderIngredients ();
+    console.log(addedIngredients);
+  });
+}
+
+// pitsa qo'shimchalarini tanlash qismi tugadi.

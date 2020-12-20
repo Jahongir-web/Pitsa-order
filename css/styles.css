@@ -16,3 +16,29 @@
 .radio-input:checked + .circle {
   background-color: coral;
 }
+
+.label-ingredient {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  width: 45%;
+  margin-top: 10px;
+}
+
+.ingredient-checkbox:checked +.ingredient-span {
+  background-color: tomato;
+}
+
+.ingredient-span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.ingredient-span:hover {
+  background-color: rgb(211, 164, 156);
+}
