@@ -1,11 +1,9 @@
 var elForm = document.querySelector(`.js-order-form`);
 
-
 var typesOfBread = [`yupqa`, `qalin`, `buxonkali`];
-
 var typesOfSize = [`25sm`, `30sm`, `35sm`];
-
 var ingredients = [`pamidor`, `kurka go'shti`, `zaytun`, `bodring`, `qo'ziqorin`, `qazi`];
+var addls = [`achchiq sous`, `sosiska`, `rayhon`];
 
 var addedIngredients = [];
 var pizzaAddls = [];
@@ -14,11 +12,13 @@ var pizzaAddls = [];
 if (elForm) {
   var elSelect = elForm.querySelector(`.js-order-select`);
   var elKattaligi = elForm.querySelector(`.kattalik-turi`);
-  var elIngredientsBox = elForm.querySelector(`.massalliqlar`);  // inputlar
+  var elIngredientsBox = elForm.querySelector(`.massalliqlar`);
+  var elAddlsBox = elForm.querySelector(`.qoshimchalar`);   // inputlar
   var elNonTuri = elForm.querySelector(`.non-turi`);
   var elSizeDiv = elForm.querySelector(`.kattaligi`);
   var elUstida = elForm.querySelector(`.ustida`);
-
+  var elOrasida = elForm.querySelector(`.qoshimchalar-turi`);
+  var finish = elForm.querySelector(`.result`);
 }
 
 for (var type of typesOfBread){
@@ -112,3 +112,56 @@ for (let ingredient of ingredients) {
 }
 
 // pitsa qo'shimchalarini tanlash qismi tugadi.
+
+
+var updateOrderAddls = function () {
+
+  elOrasida.innerHTML = '';
+
+  for (var pizzaAddl of pizzaAddls) {
+    var elIngredientItem = document.createElement('li'); // li yasaymiz
+    elIngredientItem.textContent = pizzaAddl;
+    elOrasida.appendChild(elIngredientItem); // li ni ul ga joylab qo'yamiz.
+  }
+};
+
+
+for (let addl of addls) {
+  var addlsLabel = document.createElement(`label`);
+  var addlsInput = document.createElement(`input`);
+  var addlsSpan = document.createElement(`span`);
+
+  addlsLabel.classList.add(`label-ingredient`);
+  addlsLabel.textContent = addl;
+  addlsInput.type = `checkbox`;
+  addlsInput.name = addl;
+  addlsInput.value = addl;
+  addlsInput.classList.add(`ingredient-checkbox`);
+  addlsInput.classList.add(`sr-only`);
+  addlsSpan.classList.add(`ingredient-span`);
+
+  addlsLabel.appendChild(addlsInput);
+  addlsLabel.appendChild(addlsSpan);
+
+  elAddlsBox.appendChild(addlsLabel);
+
+
+  addlsInput.addEventListener (`click`, function () {
+
+
+    if (pizzaAddls.includes(this.name)) {
+      var itemIndex = pizzaAddls.indexOf(this.name);
+      pizzaAddls.splice(itemIndex, 1);
+    } else {
+      pizzaAddls.push(this.name);
+    }
+
+    updateOrderAddls ();
+    console.log(pizzaAddls);
+  });
+}
+
+elForm.addEventListener(`submit`, function (evt){
+  evt.preventDefault();
+  finish.textContent = `Buyurtmangiz yo'lga chiqdi. Bizni tanlaganingizdan xursandmiz! 😎`;
+});
